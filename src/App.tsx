@@ -225,7 +225,6 @@ function AdminPanel({ theme, onToggleTheme }: { theme: "light" | "dark"; onToggl
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [loginStatus, setLoginStatus] = useState("");
   const [projectStatus, setProjectStatus] = useState("");
-  const [lastUpdatedAt, setLastUpdatedAt] = useState("");
 
   const adminFetch = async <T,>(path: string, options?: RequestInit): Promise<T> => {
     return api<T>(path, {
@@ -241,11 +240,6 @@ function AdminPanel({ theme, onToggleTheme }: { theme: "light" | "dark"; onToggl
   const loadPortfolio = async () => {
     const data = await api<Portfolio>("/api/portfolio");
     setPortfolio(data);
-    setLastUpdatedAt(new Date().toLocaleTimeString("tr-TR", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    }));
   };
 
   useEffect(() => {
@@ -378,9 +372,6 @@ function AdminPanel({ theme, onToggleTheme }: { theme: "light" | "dark"; onToggl
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl font-black">Proje Listesi</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  AJAX oto yenileme açık. Son güncelleme: {lastUpdatedAt || "bekleniyor"}
-                </p>
               </div>
               <button type="button" onClick={loadPortfolio} className="rounded-md bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">
                 Yenile

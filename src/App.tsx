@@ -116,7 +116,7 @@ export default function App() {
 
   return (
     <main>
-      <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-border/70 bg-background/85 px-5 py-4 backdrop-blur md:px-12">
+      <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-border bg-background px-5 py-4 shadow-sm md:px-12">
         <a href="#home" className="flex items-center gap-3 font-extrabold">
           <span className="grid h-10 w-10 place-items-center rounded-lg bg-foreground text-background">FN</span>
           Portfolio Hub

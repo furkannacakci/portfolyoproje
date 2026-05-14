@@ -54,9 +54,9 @@ export const Component = () => {
       </motion.div>
 
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-orange-500/40 blur-[120px] dark:bg-orange-600/20" />
-        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-primary/30 blur-[100px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-500/40 blur-[120px] dark:bg-blue-600/20" />
+        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-[var(--chart-1)] opacity-30 blur-[120px]" />
+        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-[var(--chart-3)] opacity-20 blur-[100px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-[var(--chart-5)] opacity-20 blur-[120px]" />
       </div>
 
       <div className="pointer-events-none relative z-10 mx-auto flex max-w-3xl flex-col items-center space-y-6 px-4 text-center">
@@ -73,13 +73,13 @@ export const Component = () => {
         <div className="pointer-events-auto flex flex-wrap justify-center gap-4">
           <button
             onClick={() => setCount(count + 1)}
-            className="rounded-md bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-md transition-all hover:bg-primary/90 active:scale-95"
+            className="rounded-md bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-md transition-all hover:opacity-90 active:scale-95"
           >
             Etkileşim ({count})
           </button>
           <a
             href="#projects"
-            className="rounded-md bg-secondary px-8 py-3 font-semibold text-secondary-foreground transition-all hover:bg-secondary/80 active:scale-95"
+            className="rounded-md bg-secondary px-8 py-3 font-semibold text-secondary-foreground transition-all hover:opacity-80 active:scale-95"
           >
             Projeleri Gör
           </a>

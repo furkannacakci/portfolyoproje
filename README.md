@@ -52,6 +52,14 @@ data/schema.sql
 
 `data/db.json` sadece ilk çalıştırmada SQLite dosyasını seed etmek için tutulur. Uygulama çalışırken profil, yetenekler, projeler ve mesajlar `data/portfolio.db` içindeki SQL tablolarından okunur/yazılır.
 
+InfinityFree/phpMyAdmin gibi MySQL kullanan paneller için SQLite dosyası yerine şu dosya import edilmelidir:
+
+```text
+data/mysql-schema.sql
+```
+
+`data/schema.sql` SQLite içindir; MySQL tarafında `TEXT PRIMARY KEY` ve `CHECK` gibi ifadeler hata verebilir.
+
 ## API Endpointleri
 
 ```text

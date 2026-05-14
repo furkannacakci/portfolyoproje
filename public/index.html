@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Furkan Nacakcı | Portfolio Hub</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Portfolio Hub ana sayfa">
+        <span class="brand-mark">FH</span>
+        <span>Portfolio Hub</span>
+      </a>
+      <nav class="nav" aria-label="Ana navigasyon">
+        <a href="#projects">Projeler</a>
+        <a href="#skills">Yetenekler</a>
+        <a href="#contact">İletişim</a>
+        <a href="#admin">Yönetim</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Full stack öğrenci portfoliosu</p>
+          <h1 id="profile-name">Portfolio yükleniyor...</h1>
+          <p id="profile-summary" class="hero-summary"></p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Projeleri Gör</a>
+            <a class="button ghost" href="#contact">İletişime Geç</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Portfolio istatistikleri">
+          <div>
+            <span id="project-count">0</span>
+            <p>Proje</p>
+          </div>
+          <div>
+            <span id="skill-count">0</span>
+            <p>Yetenek</p>
+          </div>
+          <div>
+            <span id="message-count">0</span>
+            <p>Mesaj</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section band">
+        <div class="section-heading">
+          <p class="eyebrow">Hakkımda</p>
+          <h2>Geliştirici profili</h2>
+        </div>
+        <div class="profile-grid">
+          <article>
+            <span>Rol</span>
+            <strong id="profile-title"></strong>
+          </article>
+          <article>
+            <span>Konum</span>
+            <strong id="profile-location"></strong>
+          </article>
+          <article>
+            <span>Durum</span>
+            <strong id="profile-availability"></strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Çalışmalar</p>
+          <h2>Öne çıkan projeler</h2>
+        </div>
+        <div id="projects-grid" class="projects-grid"></div>
+      </section>
+
+      <section id="skills" class="section band">
+        <div class="section-heading">
+          <p class="eyebrow">Teknoloji</p>
+          <h2>Yetenekler ve teknolojiler</h2>
+        </div>
+        <div id="skills-list" class="skills-list"></div>
+      </section>
+
+      <section id="contact" class="section contact-layout">
+        <div class="section-heading">
+          <p class="eyebrow">İletişim</p>
+          <h2>Mesaj gönder</h2>
+          <p class="muted">Mesajlar backend API üzerinden kaydedilir; bu bölüm full stack form işleme akışını gösterir.</p>
+        </div>
+        <form id="contact-form" class="form">
+          <label>
+            Ad Soyad
+            <input name="name" type="text" autocomplete="name" required>
+          </label>
+          <label>
+            E-posta
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>
+            Mesaj
+            <textarea name="message" rows="5" required></textarea>
+          </label>
+          <button class="button primary" type="submit">Mesaj Gönder</button>
+          <p id="contact-status" class="form-status" role="status"></p>
+        </form>
+      </section>
+
+      <section id="admin" class="section band admin-layout">
+        <div class="section-heading">
+          <p class="eyebrow">Yönetim</p>
+          <h2>Proje yöneticisi</h2>
+          <p class="muted">REST API endpointleri ile proje kayıtları eklenebilir veya silinebilir.</p>
+        </div>
+        <form id="project-form" class="form compact">
+          <label>
+            Proje başlığı
+            <input name="title" type="text" required>
+          </label>
+          <label>
+            Tür
+            <input name="type" type="text" placeholder="Web Uygulaması" required>
+          </label>
+          <label>
+            Durum
+            <select name="status" required>
+              <option>Tamamlandı</option>
+              <option>Devam Ediyor</option>
+              <option>Planlanıyor</option>
+            </select>
+          </label>
+          <label>
+            Teknolojiler
+            <input name="tech" type="text" placeholder="Node.js, CSS, JavaScript" required>
+          </label>
+          <label class="wide">
+            Açıklama
+            <textarea name="description" rows="4" required></textarea>
+          </label>
+          <label class="check wide">
+            <input name="featured" type="checkbox" checked>
+            Öne çıkan proje
+          </label>
+          <button class="button primary" type="submit">Proje Ekle</button>
+          <p id="project-status" class="form-status" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Portfolio Hub - İnternet Web Programlama full stack ödevi</p>
+      <a href="mailto:furkan@example.com" id="profile-email">furkan@example.com</a>
+    </footer>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "name": "iwp-portfolio-hub",
+  "version": "1.0.0",
+  "description": "İnternet Web Programlama dersi için full stack portfolio ve proje vitrin sitesi.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "test": "node server/index.js --check && npm run build",
+    "server": "node server/index.js",
+    "sync:projects": "node scripts/sync-projects-from-workspaces.cjs",
+    "autopush": "node scripts/git-auto-push.cjs"
+  },
+  "keywords": [
+    "portfolio",
+    "full-stack",
+    "node",
+    "iwp"
+  ],
+  "author": "Furkan Nacakcı",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.14.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.12"
+  }
+}

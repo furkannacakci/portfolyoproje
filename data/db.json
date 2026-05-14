@@ -1,0 +1,157 @@
+{
+  "profile": {
+    "name": "Furkan Nacakcı",
+    "title": "Full Stack Geliştirici",
+    "location": "İstanbul, Türkiye",
+    "email": "furkan@example.com",
+    "summary": "Temiz, kullanışlı ve responsive web uygulamaları geliştiriyorum. Arayüz tasarımı, backend API yapısı ve gerçek problemlere çözüm üreten projeler üzerinde çalışmayı seviyorum.",
+    "availability": "Staj ve junior geliştirici fırsatlarına açık"
+  },
+  "skills": [
+    {
+      "id": "skill-html",
+      "name": "HTML",
+      "category": "Frontend",
+      "level": 88
+    },
+    {
+      "id": "skill-css",
+      "name": "CSS",
+      "category": "Frontend",
+      "level": 84
+    },
+    {
+      "id": "skill-js",
+      "name": "JavaScript",
+      "category": "Frontend",
+      "level": 78
+    },
+    {
+      "id": "skill-node",
+      "name": "Node.js",
+      "category": "Backend",
+      "level": 72
+    },
+    {
+      "id": "skill-api",
+      "name": "REST API",
+      "category": "Backend",
+      "level": 76
+    },
+    {
+      "id": "skill-db",
+      "name": "JSON / Veritabanı Mantığı",
+      "category": "Veri",
+      "level": 70
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-campus",
+      "title": "Kampüs Görev Panosu",
+      "type": "Web Uygulaması",
+      "status": "Tamamlandı",
+      "description": "Öğrencilerin ödevlerini, teslim tarihlerini ve proje adımlarını düzenleyebilmesi için tasarlanmış görev paneli konsepti.",
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Node.js"
+      ],
+      "featured": true
+    },
+    {
+      "id": "project-clinic",
+      "title": "Klinik Sıra Simülatörü",
+      "type": "Prototip",
+      "status": "Devam Ediyor",
+      "description": "Küçük bir klinikte hasta akışını ve oda geliştirmelerini modelleyen simülasyon prototipi.",
+      "tech": [
+        "C#",
+        "Unity",
+        "Oyun Mantığı"
+      ],
+      "featured": true
+    },
+    {
+      "id": "project-portfolio",
+      "title": "Portfolio Hub",
+      "type": "Full Stack Web Sitesi",
+      "status": "Tamamlandı",
+      "description": "Bu internet sitesi: düzenlenebilir profil verileri, yetenekler, projeler ve iletişim mesajları içeren full stack portfolio uygulaması.",
+      "tech": [
+        "Node.js",
+        "REST API",
+        "Vanilla JS",
+        "CSS"
+      ],
+      "featured": true
+    },
+    {
+      "id": "auto-myhospitaltaycoon",
+      "title": "MyHospitalTaycoon",
+      "type": "Oyun / Simülasyon Projesi",
+      "status": "Geliştiriliyor",
+      "description": "MyHospitalTaycoon projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "tech": [
+        "C#",
+        "Unity"
+      ],
+      "featured": true,
+      "sourcePath": "/Users/furkannacakci/myHospitalTaycoon",
+      "repository": ""
+    },
+    {
+      "id": "auto-pitlane",
+      "title": "Pitlane",
+      "type": "Web Projesi",
+      "status": "Geliştiriliyor",
+      "description": "Pitlane projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "tech": [
+        "Node.js",
+        "JavaScript"
+      ],
+      "featured": true,
+      "sourcePath": "/Users/furkannacakci/Desktop/pitlane",
+      "repository": "git@github.com:Ayazaga-Boys/pitlane.git"
+    },
+    {
+      "id": "auto-urbantransit-recovery",
+      "title": "Urbantransit Recovery",
+      "type": "Oyun / Simülasyon Projesi",
+      "status": "Geliştiriliyor",
+      "description": "Urbantransit Recovery projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "tech": [
+        "C#",
+        "Unity"
+      ],
+      "featured": true,
+      "sourcePath": "/Users/furkannacakci/Documents/Playground/urbantransit-recovery",
+      "repository": ""
+    },
+    {
+      "id": "auto-task-management-api",
+      "title": "Task Management Api",
+      "type": "Backend API",
+      "status": "Geliştiriliyor",
+      "description": "Task Management Api projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "tech": [
+        "Node.js",
+        "Express",
+        "JavaScript"
+      ],
+      "featured": true,
+      "sourcePath": "/Users/furkannacakci/Documents/task-management-api",
+      "repository": "git@github.com:furkannacakci/task-management-api.git"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-sample",
+      "name": "Demo Ziyaretçi",
+      "email": "visitor@example.com",
+      "message": "Güzel portfolio. Projelerin hakkında daha fazla bilgi almak isterim.",
+      "createdAt": "2026-05-14T09:00:00.000Z"
+    }
+  ]
+}

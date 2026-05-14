@@ -26,6 +26,8 @@ type Project = {
   description: string;
   tech: string[];
   featured: boolean;
+  repository?: string;
+  sourcePath?: string;
 };
 
 type Message = {
@@ -41,6 +43,10 @@ type Portfolio = {
   skills: Skill[];
   projects: Project[];
   messages: Message[];
+};
+
+type AdminLoginResponse = {
+  token: string;
 };
 
 const api = async <T,>(path: string, options?: RequestInit): Promise<T> => {
@@ -59,6 +65,7 @@ export default function App() {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [contactStatus, setContactStatus] = useState("");
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [path, setPath] = useState(window.location.pathname);
 
   const loadPortfolio = async () => {
     setPortfolio(await api<Portfolio>("/api/portfolio"));
@@ -79,6 +86,12 @@ export default function App() {
     window.localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    const handleRouteChange = () => setPath(window.location.pathname);
+    window.addEventListener("popstate", handleRouteChange);
+    return () => window.removeEventListener("popstate", handleRouteChange);
+  }, []);
+
   const profile = portfolio?.profile;
 
   const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -98,6 +111,15 @@ export default function App() {
       setContactStatus(error instanceof Error ? error.message : "Mesaj gönderilemedi.");
     }
   };
+
+  if (path === "/admin") {
+    return (
+      <AdminPanel
+        theme={theme}
+        onToggleTheme={() => setTheme(current => current === "dark" ? "light" : "dark")}
+      />
+    );
+  }
 
   return (
     <main>
@@ -194,6 +216,198 @@ export default function App() {
         </form>
       </section>
 
+    </main>
+  );
+}
+
+function AdminPanel({ theme, onToggleTheme }: { theme: "light" | "dark"; onToggleTheme: () => void }) {
+  const [token, setToken] = useState(() => window.localStorage.getItem("portfolio-admin-token") || "");
+  const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
+  const [loginStatus, setLoginStatus] = useState("");
+  const [projectStatus, setProjectStatus] = useState("");
+  const [lastUpdatedAt, setLastUpdatedAt] = useState("");
+
+  const adminFetch = async <T,>(path: string, options?: RequestInit): Promise<T> => {
+    return api<T>(path, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        ...options?.headers
+      }
+    });
+  };
+
+  const loadPortfolio = async () => {
+    const data = await api<Portfolio>("/api/portfolio");
+    setPortfolio(data);
+    setLastUpdatedAt(new Date().toLocaleTimeString("tr-TR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }));
+  };
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    loadPortfolio().catch(error => {
+      setProjectStatus(error instanceof Error ? error.message : "Veriler yüklenemedi.");
+    });
+    const interval = window.setInterval(() => {
+      loadPortfolio().catch(() => undefined);
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, [token]);
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoginStatus("Giriş yapılıyor...");
+    const password = String(new FormData(event.currentTarget).get("password") || "");
+    try {
+      const response = await api<AdminLoginResponse>("/api/admin/login", {
+        method: "POST",
+        body: JSON.stringify({ password })
+      });
+      window.localStorage.setItem("portfolio-admin-token", response.token);
+      setToken(response.token);
+      setLoginStatus("");
+    } catch (error) {
+      setLoginStatus(error instanceof Error ? error.message : "Giriş başarısız.");
+    }
+  };
+
+  const handleProjectSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setProjectStatus("Proje kaydediliyor...");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      ...Object.fromEntries(formData),
+      featured: formData.has("featured")
+    };
+    try {
+      await adminFetch<Project>("/api/projects", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      form.reset();
+      setProjectStatus("Proje eklendi. Liste AJAX ile güncellendi.");
+      await loadPortfolio();
+    } catch (error) {
+      setProjectStatus(error instanceof Error ? error.message : "Proje eklenemedi.");
+    }
+  };
+
+  const deleteProject = async (projectId: string) => {
+    setProjectStatus("Proje siliniyor...");
+    try {
+      await adminFetch<{ ok: boolean }>(`/api/projects/${projectId}`, { method: "DELETE" });
+      setProjectStatus("Proje silindi. Liste AJAX ile güncellendi.");
+      await loadPortfolio();
+    } catch (error) {
+      setProjectStatus(error instanceof Error ? error.message : "Proje silinemedi.");
+    }
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem("portfolio-admin-token");
+    setToken("");
+    setPortfolio(null);
+  };
+
+  return (
+    <main className="min-h-screen bg-background px-5 py-8 text-foreground md:px-12">
+      <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
+        <a href="/" className="flex items-center gap-3 font-extrabold">
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-foreground text-background">FN</span>
+          Portfolio Admin
+        </a>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-accent"
+            aria-label={theme === "dark" ? "Light mode aç" : "Dark mode aç"}
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          {token ? (
+            <button type="button" onClick={logout} className="rounded-md bg-secondary px-4 py-2 text-sm font-bold text-secondary-foreground">
+              Çıkış
+            </button>
+          ) : null}
+        </div>
+      </header>
+
+      {!token ? (
+        <section className="mx-auto mt-14 max-w-md rounded-lg border border-border bg-card p-6 shadow-sm">
+          <p className="text-sm font-extrabold uppercase tracking-widest text-primary">Giriş</p>
+          <h1 className="mt-3 text-3xl font-black">Admin Paneli</h1>
+          <form onSubmit={handleLogin} className="mt-6 grid gap-4">
+            <label className="grid gap-2 font-bold">
+              Şifre
+              <input name="password" type="password" required className="input" placeholder="admin123" />
+            </label>
+            <button className="rounded-md bg-primary px-5 py-3 font-bold text-primary-foreground">Giriş Yap</button>
+            <p className="min-h-6 font-bold text-primary">{loginStatus}</p>
+          </form>
+        </section>
+      ) : (
+        <section className="mx-auto mt-10 grid max-w-6xl gap-6 lg:grid-cols-[1fr_0.9fr]">
+          <form onSubmit={handleProjectSubmit} className="grid gap-4 rounded-lg border border-border bg-card p-6 shadow-sm md:grid-cols-2">
+            <div className="md:col-span-2">
+              <p className="text-sm font-extrabold uppercase tracking-widest text-primary">Yönetim</p>
+              <h1 className="mt-2 text-3xl font-black">Proje Yöneticisi</h1>
+            </div>
+            <label className="grid gap-2 font-bold">Proje başlığı<input name="title" required className="input" /></label>
+            <label className="grid gap-2 font-bold">Tür<input name="type" required placeholder="Web Uygulaması" className="input" /></label>
+            <label className="grid gap-2 font-bold">Durum<select name="status" required className="input"><option>Tamamlandı</option><option>Devam Ediyor</option><option>Planlanıyor</option></select></label>
+            <label className="grid gap-2 font-bold">Teknolojiler<input name="tech" required placeholder="Node.js, React, Tailwind" className="input" /></label>
+            <label className="grid gap-2 font-bold md:col-span-2">Açıklama<textarea name="description" rows={4} required className="input" /></label>
+            <label className="flex items-center gap-2 font-bold md:col-span-2"><input name="featured" type="checkbox" defaultChecked /> Öne çıkan proje</label>
+            <button className="rounded-md bg-primary px-5 py-3 font-bold text-primary-foreground md:col-span-2">Proje Ekle</button>
+            <p className="min-h-6 font-bold text-primary md:col-span-2">{projectStatus}</p>
+          </form>
+
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 className="text-2xl font-black">Proje Listesi</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  AJAX oto yenileme açık. Son güncelleme: {lastUpdatedAt || "bekleniyor"}
+                </p>
+              </div>
+              <button type="button" onClick={loadPortfolio} className="rounded-md bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">
+                Yenile
+              </button>
+            </div>
+            <div className="mt-5 grid max-h-[620px] gap-3 overflow-auto pr-1">
+              {portfolio?.projects.map(project => (
+                <article key={project.id} className="rounded-md border border-border bg-background p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <strong>{project.title}</strong>
+                      <p className="mt-1 text-sm text-muted-foreground">{project.status}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => deleteProject(project.id)}
+                      className="rounded-md bg-destructive px-3 py-2 text-xs font-bold text-destructive-foreground transition hover:opacity-90"
+                    >
+                      Sil
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

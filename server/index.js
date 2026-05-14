@@ -8,6 +8,8 @@ const distDir = path.join(rootDir, "dist");
 const fallbackPublicDir = path.join(rootDir, "public");
 const dbPath = path.join(rootDir, "data", "db.json");
 const port = Number(process.env.PORT || 3000);
+const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+const adminToken = crypto.randomBytes(32).toString("hex");
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -63,6 +65,18 @@ function createId(prefix) {
   return `${prefix}-${crypto.randomBytes(5).toString("hex")}`;
 }
 
+function isAdminRequest(req) {
+  return req.headers.authorization === `Bearer ${adminToken}`;
+}
+
+function requireAdmin(req, res) {
+  if (isAdminRequest(req)) {
+    return true;
+  }
+  sendJson(res, 401, { error: "Admin girişi gerekli." });
+  return false;
+}
+
 function requireText(value, fieldName, maxLength = 200) {
   if (typeof value !== "string" || !value.trim()) {
     throw new Error(`${fieldName} zorunludur.`);
@@ -91,6 +105,16 @@ function normalizeProject(payload) {
 
 async function handleApi(req, res, url) {
   try {
+    if (req.method === "POST" && url.pathname === "/api/admin/login") {
+      const payload = await parseBody(req);
+      if (payload.password !== adminPassword) {
+        sendJson(res, 401, { error: "Admin şifresi hatalı." });
+        return;
+      }
+      sendJson(res, 200, { token: adminToken });
+      return;
+    }
+
     if (req.method === "GET" && url.pathname === "/api/portfolio") {
       const db = await readDb();
       sendJson(res, 200, db);
@@ -98,6 +122,9 @@ async function handleApi(req, res, url) {
     }
 
     if (req.method === "POST" && url.pathname === "/api/projects") {
+      if (!requireAdmin(req, res)) {
+        return;
+      }
       const payload = await parseBody(req);
       const project = { id: createId("project"), ...normalizeProject(payload) };
       const db = await readDb();
@@ -109,6 +136,9 @@ async function handleApi(req, res, url) {
 
     const projectMatch = url.pathname.match(/^\/api\/projects\/([^/]+)$/);
     if (projectMatch && req.method === "DELETE") {
+      if (!requireAdmin(req, res)) {
+        return;
+      }
       const db = await readDb();
       const before = db.projects.length;
       db.projects = db.projects.filter(project => project.id !== projectMatch[1]);

@@ -40,10 +40,27 @@ http://localhost:3000
 
 ```text
 GET    /api/portfolio
+POST   /api/admin/login
 POST   /api/projects
 DELETE /api/projects/:id
 POST   /api/messages
 ```
+
+## Admin Paneli
+
+Admin paneli public menüde görünmez. Yerelde şu adresten açılır:
+
+```text
+http://localhost:3000/admin
+```
+
+Varsayılan lokal admin şifresi:
+
+```text
+admin123
+```
+
+Deploy ortamında şifreyi değiştirmek için `ADMIN_PASSWORD` environment variable değeri verilmelidir. Admin panelinde proje listesi AJAX ile 5 saniyede bir otomatik yenilenir; proje ekleme ve silme işlemleri sayfa yenilemeden yapılır.
 
 ## Component ve Stil Yolları
 

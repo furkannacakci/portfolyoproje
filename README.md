@@ -1,5 +1,5 @@
 # Portfolio Hub
-
+http://furkannacakci.infinityfree.me live
 Portfolio Hub, İnternet Web Programlama dersi için hazırlanmış full stack kişisel portfolio sitesidir. Projede React tabanlı bir portfolio arayüzü, shadcn uyumlu component yapısı, Tailwind CSS tasarım sistemi, proje vitrini, yetenekler bölümü, iletişim formu ve proje ekleme/silme işlemleri için küçük bir yönetim alanı bulunur.
 
 ## Özellikler

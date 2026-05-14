@@ -100,6 +100,15 @@ Bu proje Node.js destekleyen Render veya Railway gibi platformlara deploy edileb
 
 SQLite için Node.js `node:sqlite` modülü kullanıldığı için Node.js 24 veya üzeri önerilir.
 
+InfinityFree gibi PHP/MySQL hostinglerde Node.js backend çalışmaz. Bu durumda `deploy/infinityfree` klasöründeki PHP API dosyaları kullanılmalıdır:
+
+```bash
+npm run build
+npm run build:infinityfree
+```
+
+Oluşan `deploy/infinityfree-public-html` klasörünün içeriği hostingdeki `htdocs` veya `public_html` klasörüne yüklenir. MySQL tabloları için `data/mysql-schema.sql` import edilmeli ve `api/config.php` içindeki database bilgileri doldurulmalıdır.
+
 Önerilen Render ayarları:
 
 - Derleme komutu: `npm install && npm run build`

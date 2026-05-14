@@ -9,6 +9,7 @@
     "build": "tsc -b && vite build",
     "test": "node --no-warnings server/index.js --check && npm run build",
     "server": "node --no-warnings server/index.js",
+    "build:infinityfree": "node scripts/build-infinityfree-deploy.cjs",
     "sync:projects": "node --no-warnings scripts/sync-projects-from-workspaces.cjs",
     "autopush": "node --no-warnings scripts/git-auto-push.cjs"
   },

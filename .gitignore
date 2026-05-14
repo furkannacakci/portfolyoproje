@@ -3,3 +3,5 @@ node_modules/
 *.log
 dist/
 coverage/
+deploy/infinityfree-public-html/
+deploy/infinityfree-public-html.zip

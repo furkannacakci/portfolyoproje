@@ -57,7 +57,7 @@ CREATE TABLE messages (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO profile (id, name, title, location, email, summary, availability) VALUES
-(1, 'Furkan Nacakcı', 'Full Stack Geliştirici', 'İstanbul, Türkiye', 'furkan@example.com', 'Temiz, kullanışlı ve responsive web uygulamaları geliştiriyorum. Arayüz tasarımı, backend API yapısı ve gerçek problemlere çözüm üreten projeler üzerinde çalışmayı seviyorum.', 'Staj ve junior geliştirici fırsatlarına açık');
+(1, 'Furkan Nacakcı', 'Full Stack Geliştirici', 'İstanbul, Türkiye', 'furkan.nck@gmail.com', 'Temiz, kullanışlı ve responsive web uygulamaları geliştiriyorum. Arayüz tasarımı, backend API yapısı ve gerçek problemlere çözüm üreten projeler üzerinde çalışmayı seviyorum.', 'Staj ve junior geliştirici fırsatlarına açık');
 
 INSERT INTO skills (id, name, category, `level`) VALUES
 ('skill-html', 'HTML', 'Frontend', 88),
@@ -99,4 +99,4 @@ INSERT INTO project_tech (project_id, tech, sort_order) VALUES
 ('auto-task-management-api', 'JavaScript', 2);
 
 INSERT INTO messages (id, name, email, message, created_at) VALUES
-('msg-sample', 'Demo Ziyaretçi', 'visitor@example.com', 'Güzel portfolio. Projelerin hakkında daha fazla bilgi almak isterim.', '2026-05-14 09:00:00');
+('msg-sample', 'Demo Ziyaretçi', 'demo@ornekmail.com', 'Güzel portfolio. Projelerin hakkında daha fazla bilgi almak isterim.', '2026-05-14 09:00:00');

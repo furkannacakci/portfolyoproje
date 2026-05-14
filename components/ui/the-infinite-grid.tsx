@@ -7,6 +7,7 @@ import {
   useAnimationFrame
 } from "framer-motion";
 import { Mail } from "lucide-react";
+import profilePhotoUrl from "@/src/assets/profile-furkan.jpg";
 
 const socialLinks = [
   {
@@ -78,40 +79,53 @@ export const Component = () => {
         <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-[var(--chart-5)] opacity-20 blur-[120px]" />
       </div>
 
-      <div className="pointer-events-none relative z-10 mx-auto flex max-w-3xl flex-col items-center space-y-6 px-4 text-center">
-        <div className="space-y-2">
-          <h1 className="text-4xl font-extrabold tracking-tight text-foreground drop-shadow-sm md:text-6xl">
-            Furkan Nacakcı
-          </h1>
-        </div>
+      <div className="pointer-events-none relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-16 lg:grid-cols-[1fr_0.82fr] lg:px-12">
+        <div className="flex flex-col items-center space-y-6 text-center lg:items-start lg:text-left">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-extrabold tracking-tight text-foreground drop-shadow-sm md:text-6xl">
+              Furkan Nacakcı
+            </h1>
+          </div>
 
-        <div className="pointer-events-auto flex flex-wrap justify-center gap-4">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="rounded-md bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-md transition-all hover:opacity-90 active:scale-95"
-          >
-            Etkileşim ({count})
-          </button>
-          <a
-            href="#projects"
-            className="rounded-md bg-secondary px-8 py-3 font-semibold text-secondary-foreground transition-all hover:opacity-80 active:scale-95"
-          >
-            Projeleri Gör
-          </a>
-        </div>
-
-        <div className="pointer-events-auto flex items-center justify-center gap-3">
-          {socialLinks.map(({ label, href, icon: Icon }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              title={label}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm transition hover:bg-accent hover:text-accent-foreground active:scale-95"
+          <div className="pointer-events-auto flex flex-wrap justify-center gap-4 lg:justify-start">
+            <button
+              onClick={() => setCount(count + 1)}
+              className="rounded-md bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-md transition-all hover:opacity-90 active:scale-95"
             >
-              <Icon className="h-5 w-5" />
+              Etkileşim ({count})
+            </button>
+            <a
+              href="#projects"
+              className="rounded-md bg-secondary px-8 py-3 font-semibold text-secondary-foreground transition-all hover:opacity-80 active:scale-95"
+            >
+              Projeleri Gör
             </a>
-          ))}
+          </div>
+
+          <div className="pointer-events-auto flex items-center justify-center gap-3 lg:justify-start">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                title={label}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm transition hover:bg-accent hover:text-accent-foreground active:scale-95"
+              >
+                <Icon className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto w-full max-w-[320px] justify-self-center sm:max-w-[360px] lg:max-w-[430px]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border bg-card shadow-2xl shadow-black/10">
+            <img
+              src={profilePhotoUrl}
+              alt="Furkan Nacakcı"
+              className="h-full w-full object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+          </div>
         </div>
       </div>
     </div>

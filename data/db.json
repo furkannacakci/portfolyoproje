@@ -3,7 +3,7 @@
     "name": "Furkan Nacakcı",
     "title": "Full Stack Geliştirici",
     "location": "İstanbul, Türkiye",
-    "email": "furkan@example.com",
+    "email": "furkan.nck@gmail.com",
     "summary": "Temiz, kullanışlı ve responsive web uygulamaları geliştiriyorum. Arayüz tasarımı, backend API yapısı ve gerçek problemlere çözüm üreten projeler üzerinde çalışmayı seviyorum.",
     "availability": "Staj ve junior geliştirici fırsatlarına açık"
   },
@@ -149,7 +149,7 @@
     {
       "id": "msg-sample",
       "name": "Demo Ziyaretçi",
-      "email": "visitor@example.com",
+      "email": "demo@ornekmail.com",
       "message": "Güzel portfolio. Projelerin hakkında daha fazla bilgi almak isterim.",
       "createdAt": "2026-05-14T09:00:00.000Z"
     }

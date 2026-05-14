@@ -40,7 +40,7 @@
     },
     {
       "id": "skill-db",
-      "name": "JSON / Veritabanı Mantığı",
+      "name": "SQL / Veritabanı Mantığı",
       "category": "Veri",
       "level": 70
     }

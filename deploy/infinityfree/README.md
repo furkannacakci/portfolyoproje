@@ -24,5 +24,6 @@ npm run build:infinityfree
 
 - Domain ana sayfasinda `index.html` acilmali.
 - `/assets/...js` dosyalari 404 vermemeli.
+- `/api/check.php` tarayicida `ok: true` ve tablo sayilarini gostermeli.
 - `/api/portfolio` tarayicida JSON donmeli.
 - `/api/portfolio` database hatasi verirse `api/config.php` bilgileri yanlistir veya MySQL import eksiktir.

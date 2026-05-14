@@ -105,8 +105,6 @@ export const Component = () => {
             <a
               key={label}
               href={href}
-              target={href.startsWith("mailto:") ? undefined : "_blank"}
-              rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
               aria-label={label}
               title={label}
               className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm transition hover:bg-accent hover:text-accent-foreground active:scale-95"

@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
+const { getPortfolio, replaceAutoProjects, sqlDbPath } = require("../server/database.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
-const dbPath = path.join(rootDir, "data", "db.json");
 const codeWorkspaceStorage = path.join(
   os.homedir(),
   "Library",
@@ -13,7 +13,6 @@ const codeWorkspaceStorage = path.join(
   "workspaceStorage"
 );
 
-const manualProjectIds = new Set(["project-campus", "project-clinic", "project-portfolio"]);
 const projectOverrides = {
   myhospitaltaycoon: {
     title: "MyHospitalTycoon",
@@ -173,20 +172,15 @@ const candidateRoots = Array.from(new Set([...getCodeWorkspaceFolders(), ...extr
   .filter(root => path.resolve(root) !== rootDir)
   .filter(root => hasAny(root, ["package.json", "Assets", "ProjectSettings", ".git"]));
 
-const db = readJson(dbPath);
-if (!db) {
-  throw new Error("data/db.json okunamadı.");
-}
-
 const autoProjects = candidateRoots.map(makeProject);
-const manualProjects = db.projects.filter(project => manualProjectIds.has(project.id) || !String(project.id).startsWith("auto-"));
+const manualProjects = getPortfolio().projects.filter(project => !String(project.id).startsWith("auto-"));
 const existingManualByTitle = new Set(manualProjects.map(project => project.title.toLowerCase()));
 const filteredAutoProjects = autoProjects.filter(project => !existingManualByTitle.has(project.title.toLowerCase()));
 
-db.projects = [...manualProjects, ...filteredAutoProjects];
-fs.writeFileSync(dbPath, `${JSON.stringify(db, null, 2)}\n`);
+replaceAutoProjects(filteredAutoProjects);
 
-console.log(`Portfolio proje listesi güncellendi. Otomatik proje sayısı: ${filteredAutoProjects.length}`);
+console.log(`Portfolio SQL proje listesi güncellendi: ${sqlDbPath}`);
+console.log(`Otomatik proje sayısı: ${filteredAutoProjects.length}`);
 filteredAutoProjects.forEach(project => {
   console.log(`- ${project.title} (${project.type})`);
 });

@@ -2,11 +2,17 @@ const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
+const {
+  addMessage,
+  addProject,
+  deleteProject,
+  getPortfolio,
+  sqlDbPath
+} = require("./database.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
 const distDir = path.join(rootDir, "dist");
 const fallbackPublicDir = path.join(rootDir, "public");
-const dbPath = path.join(rootDir, "data", "db.json");
 const port = Number(process.env.PORT || 3000);
 const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
 const adminToken = crypto.randomBytes(32).toString("hex");
@@ -19,15 +25,6 @@ const mimeTypes = {
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon"
 };
-
-async function readDb() {
-  const raw = await fs.readFile(dbPath, "utf8");
-  return JSON.parse(raw);
-}
-
-async function writeDb(data) {
-  await fs.writeFile(dbPath, `${JSON.stringify(data, null, 2)}\n`);
-}
 
 function sendJson(res, statusCode, payload) {
   res.writeHead(statusCode, {
@@ -116,8 +113,7 @@ async function handleApi(req, res, url) {
     }
 
     if (req.method === "GET" && url.pathname === "/api/portfolio") {
-      const db = await readDb();
-      sendJson(res, 200, db);
+      sendJson(res, 200, getPortfolio());
       return;
     }
 
@@ -127,10 +123,7 @@ async function handleApi(req, res, url) {
       }
       const payload = await parseBody(req);
       const project = { id: createId("project"), ...normalizeProject(payload) };
-      const db = await readDb();
-      db.projects.unshift(project);
-      await writeDb(db);
-      sendJson(res, 201, project);
+      sendJson(res, 201, addProject(project));
       return;
     }
 
@@ -139,14 +132,10 @@ async function handleApi(req, res, url) {
       if (!requireAdmin(req, res)) {
         return;
       }
-      const db = await readDb();
-      const before = db.projects.length;
-      db.projects = db.projects.filter(project => project.id !== projectMatch[1]);
-      if (db.projects.length === before) {
+      if (!deleteProject(projectMatch[1])) {
         sendJson(res, 404, { error: "Proje bulunamadı." });
         return;
       }
-      await writeDb(db);
       sendJson(res, 200, { ok: true });
       return;
     }
@@ -160,10 +149,7 @@ async function handleApi(req, res, url) {
         message: requireText(payload.message, "Mesaj", 600),
         createdAt: new Date().toISOString()
       };
-      const db = await readDb();
-      db.messages.unshift(message);
-      await writeDb(db);
-      sendJson(res, 201, message);
+      sendJson(res, 201, addMessage(message));
       return;
     }
 
@@ -211,19 +197,18 @@ async function requestHandler(req, res) {
 }
 
 if (process.argv.includes("--check")) {
-  readDb()
-    .then(db => {
-      const requiredKeys = ["profile", "skills", "projects", "messages"];
-      const missing = requiredKeys.filter(key => !(key in db));
-      if (missing.length) {
-        throw new Error(`Missing db keys: ${missing.join(", ")}`);
-      }
-      console.log("Proje sağlık kontrolü geçti.");
-    })
-    .catch(error => {
-      console.error(error.message);
-      process.exit(1);
-    });
+  try {
+    const db = getPortfolio();
+    const requiredKeys = ["profile", "skills", "projects", "messages"];
+    const missing = requiredKeys.filter(key => !(key in db));
+    if (missing.length) {
+      throw new Error(`Missing db keys: ${missing.join(", ")}`);
+    }
+    console.log(`Proje sağlık kontrolü geçti. SQL database: ${sqlDbPath}`);
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
 } else {
   http.createServer(requestHandler).listen(port, () => {
     console.log(`Portfolio Hub http://localhost:${port} adresinde çalışıyor.`);

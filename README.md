@@ -7,17 +7,17 @@ Portfolio Hub, İnternet Web Programlama dersi için hazırlanmış full stack k
 - React + TypeScript tabanlı responsive portfolio ana sayfası
 - `components/ui/the-infinite-grid.tsx` içinde framer-motion ile animasyonlu infinite grid hero
 - shadcn uyumlu `components/ui` ve `lib/utils` klasör yapısı
-- Profil, proje, yetenek ve mesaj verilerini backend API üzerinden yükleme
+- Profil, proje, yetenek ve mesaj verilerini SQL database üzerinden backend API ile yükleme
 - Mesajları kaydeden iletişim formu
 - Proje ekleme ve silme işlemleri
-- Basit kalıcı veri için JSON dosya tabanı
+- Kalıcı veri için SQLite SQL database
 - Node.js backend ile statik React build servis etme
 
 ## Kullanılan Teknolojiler
 
 - Frontend: React, TypeScript, Tailwind CSS
 - Backend: Node.js HTTP server
-- Veri: JSON dosya veritabanı
+- Veri: SQLite SQL database (`data/portfolio.db`)
 - API yapısı: REST
 - UI yardımcıları: shadcn uyumlu yapı, `clsx`, `tailwind-merge`
 - Animasyon: framer-motion
@@ -35,6 +35,22 @@ Sonra tarayıcıdan aç:
 ```text
 http://localhost:3000
 ```
+
+## SQL Database
+
+Proje SQL database olarak SQLite kullanır:
+
+```text
+data/portfolio.db
+```
+
+SQL tablo şeması:
+
+```text
+data/schema.sql
+```
+
+`data/db.json` sadece ilk çalıştırmada SQLite dosyasını seed etmek için tutulur. Uygulama çalışırken profil, yetenekler, projeler ve mesajlar `data/portfolio.db` içindeki SQL tablolarından okunur/yazılır.
 
 ## API Endpointleri
 
@@ -73,6 +89,8 @@ Deploy ortamında şifreyi değiştirmek için `ADMIN_PASSWORD` environment vari
 ## Deploy Notları
 
 Bu proje Node.js destekleyen Render veya Railway gibi platformlara deploy edilebilir.
+
+SQLite için Node.js `node:sqlite` modülü kullanıldığı için Node.js 24 veya üzeri önerilir.
 
 Önerilen Render ayarları:
 

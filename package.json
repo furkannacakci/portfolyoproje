@@ -4,13 +4,13 @@
   "description": "İnternet Web Programlama dersi için full stack portfolio ve proje vitrin sitesi.",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node --no-warnings server/index.js",
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
-    "test": "node server/index.js --check && npm run build",
-    "server": "node server/index.js",
-    "sync:projects": "node scripts/sync-projects-from-workspaces.cjs",
-    "autopush": "node scripts/git-auto-push.cjs"
+    "test": "node --no-warnings server/index.js --check && npm run build",
+    "server": "node --no-warnings server/index.js",
+    "sync:projects": "node --no-warnings scripts/sync-projects-from-workspaces.cjs",
+    "autopush": "node --no-warnings scripts/git-auto-push.cjs"
   },
   "keywords": [
     "portfolio",
@@ -21,7 +21,7 @@
   "author": "Furkan Nacakcı",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "dependencies": {
     "clsx": "^2.1.1",

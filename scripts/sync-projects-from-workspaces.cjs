@@ -14,6 +14,22 @@ const codeWorkspaceStorage = path.join(
 );
 
 const manualProjectIds = new Set(["project-campus", "project-clinic", "project-portfolio"]);
+const projectOverrides = {
+  myhospitaltaycoon: {
+    title: "MyHospitalTycoon",
+    description: "MyHospitalTycoon, oyuncunun kendi hastanesini yönetip büyüttüğü bir tycoon simülasyonu olarak tasarlanıyor. Klinik akışı, hasta kabulü, oda geliştirmeleri ve gelir yönetimi gibi sistemlerle hastaneyi adım adım geliştirmeye odaklanıyor."
+  },
+  pitlane: {
+    description: "Pitlane, motor ve araba toplulukları için geliştirilen bir sürüş uygulaması fikridir. Kullanıcılar rota planlayabilir, sohbet odalarında buluşabilir ve sürüş sırasında gruptaki diğer kullanıcıları harita üzerinde canlı takip edebilir."
+  },
+  "urbantransit-recovery": {
+    title: "Begum Midwife Clinic",
+    description: "Begum Midwife Clinic, Unity ile geliştirilen oynanabilir bir klinik simülasyonu prototipidir. Oyuncu klinikte hastaları karşılar, şikayetlerine göre doğru odaya yönlendirir, işlemleri tamamlar ve kazandığı gelirle çalışan, makine ve oda geliştirmeleri yapar."
+  },
+  "task-management-api": {
+    description: "Task Management API, Express ile geliştirilen basit bir görev yönetimi servisidir. Görev oluşturma, listeleme, güncelleme ve silme endpointleriyle temel CRUD mantığını backend tarafında göstermeyi amaçlar."
+  }
+};
 const extraProjectRoots = [
   path.join(os.homedir(), "Documents", "task-management-api"),
   path.join(os.homedir(), "Documents", "Playground", "urbantransit-recovery")
@@ -129,17 +145,20 @@ function getGitRemote(root) {
 function makeProject(root) {
   const packageJson = readJson(path.join(root, "package.json"));
   const name = packageJson?.name || path.basename(root);
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const override = projectOverrides[slug] || projectOverrides[path.basename(root).toLowerCase()];
   const tech = detectTech(root, packageJson);
   const remote = getGitRemote(root);
   const isUnity = tech.includes("Unity");
   const isApi = tech.includes("Express") || name.toLowerCase().includes("api");
 
   return {
-    id: `auto-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`,
-    title: titleFromName(name),
+    id: `auto-${slug}`,
+    title: override?.title || titleFromName(name),
     type: isUnity ? "Oyun / Simülasyon Projesi" : isApi ? "Backend API" : "Web Projesi",
     status: "Geliştiriliyor",
-    description: packageJson?.description?.trim()
+    description: override?.description
+      || packageJson?.description?.trim()
       || `${titleFromName(name)} projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.`,
     tech: tech.length ? tech : ["Proje Geliştirme"],
     featured: true,

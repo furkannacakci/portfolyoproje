@@ -89,10 +89,10 @@
     },
     {
       "id": "auto-myhospitaltaycoon",
-      "title": "MyHospitalTaycoon",
+      "title": "MyHospitalTycoon",
       "type": "Oyun / Simülasyon Projesi",
       "status": "Geliştiriliyor",
-      "description": "MyHospitalTaycoon projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "description": "MyHospitalTycoon, oyuncunun kendi hastanesini yönetip büyüttüğü bir tycoon simülasyonu olarak tasarlanıyor. Klinik akışı, hasta kabulü, oda geliştirmeleri ve gelir yönetimi gibi sistemlerle hastaneyi adım adım geliştirmeye odaklanıyor.",
       "tech": [
         "C#",
         "Unity"
@@ -106,7 +106,7 @@
       "title": "Pitlane",
       "type": "Web Projesi",
       "status": "Geliştiriliyor",
-      "description": "Pitlane projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "description": "Pitlane, motor ve araba toplulukları için geliştirilen bir sürüş uygulaması fikridir. Kullanıcılar rota planlayabilir, sohbet odalarında buluşabilir ve sürüş sırasında gruptaki diğer kullanıcıları harita üzerinde canlı takip edebilir.",
       "tech": [
         "Node.js",
         "JavaScript"
@@ -117,10 +117,10 @@
     },
     {
       "id": "auto-urbantransit-recovery",
-      "title": "Urbantransit Recovery",
+      "title": "Begum Midwife Clinic",
       "type": "Oyun / Simülasyon Projesi",
       "status": "Geliştiriliyor",
-      "description": "Urbantransit Recovery projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "description": "Begum Midwife Clinic, Unity ile geliştirilen oynanabilir bir klinik simülasyonu prototipidir. Oyuncu klinikte hastaları karşılar, şikayetlerine göre doğru odaya yönlendirir, işlemleri tamamlar ve kazandığı gelirle çalışan, makine ve oda geliştirmeleri yapar.",
       "tech": [
         "C#",
         "Unity"
@@ -134,7 +134,7 @@
       "title": "Task Management Api",
       "type": "Backend API",
       "status": "Geliştiriliyor",
-      "description": "Task Management Api projesi VS Code çalışma alanlarından otomatik olarak portfolio sitesine eklendi.",
+      "description": "Task Management API, Express ile geliştirilen basit bir görev yönetimi servisidir. Görev oluşturma, listeleme, güncelleme ve silme endpointleriyle temel CRUD mantığını backend tarafında göstermeyi amaçlar.",
       "tech": [
         "Node.js",
         "Express",

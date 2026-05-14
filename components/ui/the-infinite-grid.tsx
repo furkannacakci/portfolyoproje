@@ -64,10 +64,6 @@ export const Component = () => {
           <h1 className="text-4xl font-extrabold tracking-tight text-foreground drop-shadow-sm md:text-6xl">
             Furkan Nacakcı
           </h1>
-          <p className="text-lg text-muted-foreground md:text-xl">
-            İmleci hareket ettirerek canlı grid katmanını ortaya çıkar. <br />
-            Arka plandaki desen sonsuz şekilde akmaya devam eder.
-          </p>
         </div>
 
         <div className="pointer-events-auto flex flex-wrap justify-center gap-4">

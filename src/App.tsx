@@ -125,7 +125,7 @@ export default function App() {
           <a href="#projects" className="hover:text-foreground">Projeler</a>
           <a href="#skills" className="hover:text-foreground">Yetenekler</a>
           <a href="#contact" className="hover:text-foreground">İletişim</a>
-          <a href="#admin" className="hover:text-foreground">Yönetim</a>
+          <a href="#admin" className="hover:text-foreground">Admin Paneli</a>
         </div>
       </nav>
 
@@ -168,13 +168,6 @@ export default function App() {
                   </span>
                 ))}
               </div>
-              <button
-                type="button"
-                onClick={() => deleteProject(project.id)}
-                className="mt-5 rounded-md bg-destructive px-4 py-2 text-sm font-bold text-destructive-foreground transition hover:opacity-90"
-              >
-                Sil
-              </button>
             </article>
           ))}
         </div>
@@ -198,7 +191,7 @@ export default function App() {
       </section>
 
       <section id="contact" className="grid gap-8 bg-muted px-5 py-16 md:grid-cols-[0.8fr_1fr] md:px-12">
-        <SectionHeader eyebrow="İletişim" title="Mesaj gönder" description="Mesajlar backend API üzerinden JSON veritabanına kaydedilir." />
+        <SectionHeader eyebrow="İletişim" title="Mesaj gönder" />
         <form onSubmit={handleContactSubmit} className="grid gap-4 rounded-lg border border-border bg-background p-6 shadow-sm">
           <label className="grid gap-2 font-bold">Ad Soyad<input name="name" required className="input" /></label>
           <label className="grid gap-2 font-bold">E-posta<input name="email" type="email" required className="input" /></label>
@@ -208,18 +201,43 @@ export default function App() {
         </form>
       </section>
 
-      <section id="admin" className="grid gap-8 bg-background px-5 py-16 md:grid-cols-[0.8fr_1fr] md:px-12">
-        <SectionHeader eyebrow="Yönetim" title="Proje yöneticisi" description="REST API ile proje ekleme ve silme işlemleri yapılır." />
-        <form onSubmit={handleProjectSubmit} className="grid gap-4 rounded-lg border border-border bg-card p-6 shadow-sm md:grid-cols-2">
-          <label className="grid gap-2 font-bold">Proje başlığı<input name="title" required className="input" /></label>
-          <label className="grid gap-2 font-bold">Tür<input name="type" required placeholder="Web Uygulaması" className="input" /></label>
-          <label className="grid gap-2 font-bold">Durum<select name="status" required className="input"><option>Tamamlandı</option><option>Devam Ediyor</option><option>Planlanıyor</option></select></label>
-          <label className="grid gap-2 font-bold">Teknolojiler<input name="tech" required placeholder="Node.js, React, Tailwind" className="input" /></label>
-          <label className="grid gap-2 font-bold md:col-span-2">Açıklama<textarea name="description" rows={4} required className="input" /></label>
-          <label className="flex items-center gap-2 font-bold md:col-span-2"><input name="featured" type="checkbox" defaultChecked /> Öne çıkan proje</label>
-          <button className="rounded-md bg-primary px-5 py-3 font-bold text-primary-foreground md:col-span-2">Proje Ekle</button>
-          <p className="min-h-6 font-bold text-primary md:col-span-2">{projectStatus}</p>
-        </form>
+      <section id="admin" className="bg-background px-5 py-16 md:px-12">
+        <SectionHeader eyebrow="Yönetim" title="Admin Paneli" />
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_0.9fr]">
+          <form onSubmit={handleProjectSubmit} className="grid gap-4 rounded-lg border border-border bg-card p-6 shadow-sm md:grid-cols-2">
+            <label className="grid gap-2 font-bold">Proje başlığı<input name="title" required className="input" /></label>
+            <label className="grid gap-2 font-bold">Tür<input name="type" required placeholder="Web Uygulaması" className="input" /></label>
+            <label className="grid gap-2 font-bold">Durum<select name="status" required className="input"><option>Tamamlandı</option><option>Devam Ediyor</option><option>Planlanıyor</option></select></label>
+            <label className="grid gap-2 font-bold">Teknolojiler<input name="tech" required placeholder="Node.js, React, Tailwind" className="input" /></label>
+            <label className="grid gap-2 font-bold md:col-span-2">Açıklama<textarea name="description" rows={4} required className="input" /></label>
+            <label className="flex items-center gap-2 font-bold md:col-span-2"><input name="featured" type="checkbox" defaultChecked /> Öne çıkan proje</label>
+            <button className="rounded-md bg-primary px-5 py-3 font-bold text-primary-foreground md:col-span-2">Proje Ekle</button>
+            <p className="min-h-6 font-bold text-primary md:col-span-2">{projectStatus}</p>
+          </form>
+
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <h3 className="text-xl font-black">Proje Listesi</h3>
+            <div className="mt-5 grid gap-3">
+              {portfolio?.projects.map(project => (
+                <article key={project.id} className="rounded-md border border-border bg-background p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <strong>{project.title}</strong>
+                      <p className="mt-1 text-sm text-muted-foreground">{project.status}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => deleteProject(project.id)}
+                      className="rounded-md bg-destructive px-3 py-2 text-xs font-bold text-destructive-foreground transition hover:opacity-90"
+                    >
+                      Sil
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
